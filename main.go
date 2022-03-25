@@ -1,24 +1,25 @@
 package main
 
 import (
-	"builder_example/builder"
 	"fmt"
+	p "prototype_example/prototype"
 )
 
 func main() {
-	normalBuilder := builder.GetBuilder("normal")
-	iglooBuilder := builder.GetBuilder("igloo")
-
-	director := builder.NewDirector(normalBuilder)
-	normalHouse := director.BuildHouse()
-
-	fmt.Printf("Normal House Door Type: %s\n", normalHouse.GetDoorType())
-	fmt.Printf("Normal House Window Type: %s\n", normalHouse.GetWindowType())
-	fmt.Printf("Normal House Floor Type: %d\n", normalHouse.GetFloorType())
-
-	director.SetBuilder(iglooBuilder)
-	iglooHouse := director.BuildHouse()
-	fmt.Printf("Igloo House Door Type: %s\n", iglooHouse.GetDoorType())
-	fmt.Printf("Igloo House Window Type: %s\n", iglooHouse.GetWindowType())
-	fmt.Printf("Igloo House Floor Type: %d\n", iglooHouse.GetFloorType())
+	file1 := &p.File{Name: "File1"}
+	file2 := &p.File{Name: "File2"}
+	file3 := &p.File{Name: "File3"}
+	folder1 := &p.Folder{
+		Childrenses: []p.INode{file1},
+		Name:        "Folder 1",
+	}
+	folder2 := &p.Folder{
+		Childrenses: []p.INode{folder1, file2, file3},
+		Name:        "Folder 2",
+	}
+	fmt.Println("\n Printing for Folder 2")
+	folder2.Print("  ")
+	cloneFolder := folder2.Clone()
+	fmt.Println("\n Printing for clone folder 2")
+	cloneFolder.Print("  ")
 }
