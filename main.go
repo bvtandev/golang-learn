@@ -1,30 +1,24 @@
 package main
 
 import (
-	"abstract_factory_example/abstractfactory"
+	"builder_example/builder"
 	"fmt"
 )
 
 func main() {
-	adidasFactory := abstractfactory.GetSportsFactory("adidas")
-	adidasShoe := adiasFactory.MakeShoe()
-	printShoeDetails(adidasShoe)
-	adidasShort := adiasFactory.MakeShoe()
-	printShoeDetails(adidasShort)
+	normalBuilder := builder.GetBuilder("normal")
+	iglooBuilder := builder.GetBuilder("igloo")
 
-	nikeFactory := abstractfactory.GetSportsFactory("nike")
-	nikeShoe := nikeFactory.MakeShoe()
-	printShoeDetails(nikeShoe)
-	nikeShort := nikeFactory.MakeShort()
-	printShortDetails(nikeShort)
-}
+	director := builder.NewDirector(normalBuilder)
+	normalHouse := director.BuildHouse()
 
-func printShoeDetails(s abstractfactory.IShoe) {
-	fmt.Printf("Logo: %s\n", s.GetLogo())
-	fmt.Printf("Size: %s\n", s.GetSize())
-}
+	fmt.Printf("Normal House Door Type: %s\n", normalHouse.GetDoorType())
+	fmt.Printf("Normal House Window Type: %s\n", normalHouse.GetWindowType())
+	fmt.Printf("Normal House Floor Type: %d\n", normalHouse.GetFloorType())
 
-func printShortDetails(s abstractfactory.IShort) {
-	fmt.Printf("Logo: %s\n", s.GetLogo())
-	fmt.Printf("Size: %s\n", s.GetSize())
+	director.SetBuilder(iglooBuilder)
+	iglooHouse := director.BuildHouse()
+	fmt.Printf("Igloo House Door Type: %s\n", iglooHouse.GetDoorType())
+	fmt.Printf("Igloo House Window Type: %s\n", iglooHouse.GetWindowType())
+	fmt.Printf("Igloo House Floor Type: %d\n", iglooHouse.GetFloorType())
 }

@@ -1,3 +1,3 @@
-module abstract_factory_example
+module builder_example
 
 go 1.17
